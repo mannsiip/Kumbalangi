@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery — Kumbalangi</title>
+  <meta name="description" content="Photos from Kumbalangi, India's first eco-tourism village.">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* Gallery-only additions, built on the tokens in css/style.css */
+    .page-title { text-align: center; max-width: 640px; margin: 0 auto 2.5rem; }
+    .page-title p { color: var(--earth); }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.75rem;
+    }
+    .gallery-item { cursor: pointer; padding: 0; text-align: left; font: inherit; color: inherit; }
+    .gallery-item .thumb {
+      height: 220px;
+      background:#dbdbdb;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 0.9rem; text-align: center; padding: 0 1rem;
+    }
+    .gallery-item .thumb img { width: 100%; height: 100%; object-fit: cover; padding: 0; }
+    .gallery-item .card-body { padding: 1rem 1.25rem; }
+    .gallery-item h3 { font-size: 1.1rem; margin-bottom: 0.2rem; }
+    .gallery-item p { font-size: 0.9rem; color: var(--earth); margin: 0; }
+    .gallery-item:focus-visible, .lightbox button:focus-visible, .menu-toggle:focus-visible {
+      outline: 3px solid var(--accent); outline-offset: 3px;
+    }
+
+    .lightbox {
+      border: none; border-radius: 1rem; padding: 0; background: var(--dark);
+      width: min(92vw, 900px); margin: auto; overflow: hidden;
+    }
+    .lightbox::backdrop { background: rgba(28,25,23,0.85); }
+    .lightbox img { width: 100%; max-height: 70vh; object-fit: contain; display: block; background: #000; }
+    .lightbox .caption { color: white; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .lightbox .caption h3 { color: white; margin: 0; font-size: 1.1rem; }
+    .lightbox .caption p { margin: 0; color: #d6d3d1; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container nav">
+      <a href="../index.html" class="logo">Kumbalangi<span>.</span></a>
+      <button class="menu-toggle" aria-label="Menu">☰</button>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="voices.html">Voices</a></li>
+        <li><a href="livelihoods.html">Livelihoods</a></li>
+        <li><a href="people.html">People</a></li>
+        <li><a href="nature.html">Nature</a></li>
+        <li><a href="explore.html">Explore</a></li>
+        <li><a href="responsible.html">Responsible Tourism</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section class="section section-alt">
+      <div class="container">
+        <div class="page-title">
+          <h1>Gallery</h1>
+          <p>A few moments from the backwaters, fishing nets and village lanes of Kumbalangi.</p>
+        </div>
+
+        <div class="gallery-grid">
+          <button class="card gallery-item" data-title="A lifetime by the backwaters" data-text="A 72-year-old resident of Kumbalangi.">
+            <div class="thumb"><img src="../images/all.jpeg" alt="Elder resident by the backwaters" loading="lazy" onerror="this.replaceWith('Add images/intlo_thatha.png')"></div>
+            <div class="card-body"><h3>A Local Fisherman</h3><p>A resident of Kumbalangi.</p></div>
+          </button>
+
+          <button class="card gallery-item" data-title="The backwaters" data-text="Calm water and green banks around the village.">
+            <div class="thumb"><img src="../images/geo.jpeg" loading="lazy" onerror="this.replaceWith('Photo could not load')"></div>
+            <div class="card-body"><h3>The backwaters</h3><p>Calm water and green banks around the village.</p></div>
+          </button>
+
+          <button class="card gallery-item" data-title="Chinese fishing nets" data-text="Over 100 nets dot the water facing the village.">
+            <div class="thumb"><img src="../images/fish.jpeg" alt="Chinese fishing nets" loading="lazy" onerror="this.replaceWith('Add images/photo3.jpg')"></div>
+            <div class="card-body"><h3>Chinese fishing nets</h3><p>Over 100 nets dot the water facing the village.</p></div>
+          </button>
+
+          <button class="card gallery-item" data-title="Coir making" data-text="Coir spinning, a craft passed down generations.">
+            <div class="thumb"><img src="../images/vere_thatha.jpeg" alt="Coir spinning" loading="lazy" onerror="this.replaceWith('Add images/photo4.jpg')"></div>
+            <div class="card-body"><h3>Coir making</h3><p>Coir spinning, a craft passed down generations.</p></div>
+          </button>
+
+          <button class="card gallery-item" data-title="Mangroves" data-text="Mangrove edges that protect the shoreline.">
+            <div class="thumb"><img src="../images/aunty.jpeg" alt="Mangroves along the water" loading="lazy" onerror="this.replaceWith('Add images/photo5.jpg')"></div>
+            <div class="card-body"><h3>A Local Vendor</h3></div>
+          </button>
+
+          <button class="card gallery-item" data-title="Kavaru at night" data-text="Bioluminescence glowing in the water.">
+            <div class="thumb"><img src="../images/chippalu_thatha.jpeg" alt="Bioluminescent kavaru at night" loading="lazy" onerror="this.replaceWith('Add images/photo6.jpg')"></div>
+            <div class="card-body"><h3>Fisherman with Fresh Catch of the Day</h3></div>
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Photo viewer -->
+  <dialog class="lightbox" id="lightbox" aria-label="Photo viewer">
+    <img id="lb-img" src="" alt="">
+    <div class="caption">
+      <div><h3 id="lb-title"></h3><p id="lb-text"></p></div>
+      <button class="btn btn-primary" id="lb-close">Close</button>
+    </div>
+  </dialog>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4>Kumbalangi</h4>
+          <p style="margin-bottom:1rem;">A student-led SSR documentation of India’s first eco-tourism village — its people, livelihoods, nature and the responsibilities that come with tourism.</p>
+        </div>
+        <div>
+          <h4>Explore</h4>
+          <a href="voices.html">Voices</a>
+          <a href="livelihoods.html">Livelihoods</a>
+          <a href="nature.html">Nature & Kavaru</a>
+          <a href="explore.html">Eco-Trail</a>
+        </div>
+        <div>
+          <h4>Our Work</h4>
+          <a href="gallery.html">Gallery</a>
+          <a href="https://linktr.ee/mannsip">Articles</a>
+          <a href="responsible.html">Responsible Tourism</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Created as part of a college Social Service Responsibility project · 2025–26</p>
+        <p style="margin-top:0.4rem; font-size:0.85rem;">All resident stories shared with consent. Photos & videos are field documentation.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    // Photo viewer (menu toggle comes from main.js)
+    const lb = document.getElementById('lightbox');
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const img = item.querySelector('img');
+        if (!img) return; // photo not added yet
+        document.getElementById('lb-img').src = img.currentSrc || img.src;
+        document.getElementById('lb-img').alt = img.alt;
+        document.getElementById('lb-title').textContent = item.dataset.title;
+        document.getElementById('lb-text').textContent = item.dataset.text;
+        lb.showModal();
+      });
+    });
+    document.getElementById('lb-close').addEventListener('click', () => lb.close());
+    lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
+  </script>
+</body>
+</html>
